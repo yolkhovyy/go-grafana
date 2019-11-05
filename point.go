@@ -29,6 +29,7 @@ func Fix(in []Point, from, to, interval uint32) []Point {
 
 	offIdx := 0
 	found := false
+
 	for timestamp, outIdx := from, 0; timestamp < to; timestamp, outIdx = timestamp+interval, outIdx+1 {
 		for inpIdx := offIdx; inpIdx < len(in); inpIdx++ {
 			in[inpIdx].Ts = cleanTimestamp(in[inpIdx].Ts, interval)
