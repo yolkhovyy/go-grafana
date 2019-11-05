@@ -28,8 +28,8 @@ func Fix(in []Point, from, to, interval uint32) []Point {
 	out := make([]Point, outSize)
 
 	offIdx := 0
+	found := false
 	for timestamp, outIdx := from, 0; timestamp < to; timestamp, outIdx = timestamp+interval, outIdx+1 {
-		found := false
 		for inpIdx := offIdx; inpIdx < len(in); inpIdx++ {
 			in[inpIdx].Ts = cleanTimestamp(in[inpIdx].Ts, interval)
 			if in[inpIdx].Ts == timestamp {
@@ -40,7 +40,9 @@ func Fix(in []Point, from, to, interval uint32) []Point {
 			}
 		}
 
-		if !found {
+		if found {
+			found = false
+		} else {
 			nanPoint.Ts = timestamp
 			out[outIdx] = nanPoint
 		}
